@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.annotation.StringRes
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.TextButton
@@ -62,7 +63,7 @@ fun StatusScreen(
         initial = PassSummary(null, 0, 0, 0),
     )
     val allowlist by allowlistRepository.allowlist.collectAsState(initial = emptySet())
-    var showResetDialog by remember { mutableStateOf(false) }
+    var pendingConfirm by remember { mutableStateOf<BulkAction?>(null) }
 
     Column(
         modifier = Modifier
@@ -129,67 +130,37 @@ fun StatusScreen(
 
         HorizontalDivider()
 
-        Button(onClick = {
-            scope.launch {
-                val includeSystemAppsNow = passStateRepository.includeSystemApps.first()
-                val ranNow = SilenceDispatch.runOrQueue(
-                    context,
-                    passStateRepository,
-                    PendingAction.SilenceAll,
-                ) { it.runSilenceAllNow(includeSystemAppsNow) }
-                val message = if (ranNow) {
-                    context.getString(R.string.status_pass_complete)
-                } else {
-                    context.getString(R.string.status_queued_run)
-                }
-                snackbarHostState.showSnackbar(message)
-            }
-        }) { Text(stringResource(R.string.status_run_now)) }
+        Button(onClick = { pendingConfirm = BulkAction.Run }) { Text(stringResource(R.string.status_run_now)) }
 
-        OutlinedButton(onClick = {
-            scope.launch {
-                val ranNow = SilenceDispatch.runOrQueue(
-                    context,
-                    passStateRepository,
-                    PendingAction.RestoreAll,
-                ) { it.restoreAllNow() }
-                val message = if (ranNow) {
-                    context.getString(R.string.status_restored_confirm)
-                } else {
-                    context.getString(R.string.status_queued_restore)
-                }
-                snackbarHostState.showSnackbar(message)
-            }
-        }) { Text(stringResource(R.string.status_restore_all)) }
+        OutlinedButton(onClick = { pendingConfirm = BulkAction.Restore }) { Text(stringResource(R.string.status_restore_all)) }
+        ButtonHint(stringResource(R.string.status_restore_all_hint))
 
-        OutlinedButton(onClick = { showResetDialog = true }) {
-            Text(stringResource(R.string.status_reset_all))
-        }
+        OutlinedButton(onClick = { pendingConfirm = BulkAction.Reset }) { Text(stringResource(R.string.status_reset_all)) }
+        ButtonHint(stringResource(R.string.status_reset_all_hint))
 
-        if (showResetDialog) {
+        pendingConfirm?.let { action ->
             AlertDialog(
-                onDismissRequest = { showResetDialog = false },
-                title = { Text(stringResource(R.string.status_reset_title)) },
-                text = { Text(stringResource(R.string.status_reset_body)) },
+                onDismissRequest = { pendingConfirm = null },
+                title = { Text(stringResource(action.title)) },
+                text = { Text(stringResource(action.body)) },
                 confirmButton = {
                     TextButton(onClick = {
-                        showResetDialog = false
+                        pendingConfirm = null
                         scope.launch {
                             val includeSystemAppsNow = passStateRepository.includeSystemApps.first()
-                            val ranNow = SilenceDispatch.runOrQueue(
-                                context,
-                                passStateRepository,
-                                PendingAction.ResetAll,
-                            ) { it.resetAllToDefaultsNow(includeSystemAppsNow) }
-                            snackbarHostState.showSnackbar(
-                                if (ranNow) context.getString(R.string.status_reset_done)
-                                else context.getString(R.string.status_queued_reset),
-                            )
+                            val ranNow = SilenceDispatch.runOrQueue(context, passStateRepository, action.pending) {
+                                when (action) {
+                                    BulkAction.Run -> it.runSilenceAllNow(includeSystemAppsNow)
+                                    BulkAction.Restore -> it.restoreAllNow()
+                                    BulkAction.Reset -> it.resetAllToDefaultsNow(includeSystemAppsNow)
+                                }
+                            }
+                            snackbarHostState.showSnackbar(context.getString(if (ranNow) action.done else action.queued))
                         }
-                    }) { Text(stringResource(R.string.status_reset_confirm)) }
+                    }) { Text(stringResource(action.confirm)) }
                 },
                 dismissButton = {
-                    TextButton(onClick = { showResetDialog = false }) { Text(stringResource(R.string.status_reset_cancel)) }
+                    TextButton(onClick = { pendingConfirm = null }) { Text(stringResource(R.string.status_reset_cancel)) }
                 },
             )
         }
@@ -213,6 +184,25 @@ fun StatusScreen(
             )
         }
     }
+}
+
+/** The three Status buttons that change every app at once, each confirmed before it runs. */
+private enum class BulkAction(
+    @StringRes val title: Int,
+    @StringRes val body: Int,
+    @StringRes val confirm: Int,
+    @StringRes val done: Int,
+    @StringRes val queued: Int,
+    val pending: PendingAction,
+) {
+    Run(R.string.status_run_title, R.string.status_run_body, R.string.status_run_confirm, R.string.status_pass_complete, R.string.status_queued_run, PendingAction.SilenceAll),
+    Restore(R.string.status_restore_title, R.string.status_restore_body, R.string.status_restore_confirm, R.string.status_restored_confirm, R.string.status_queued_restore, PendingAction.RestoreAll),
+    Reset(R.string.status_reset_title, R.string.status_reset_body, R.string.status_reset_confirm, R.string.status_reset_done, R.string.status_queued_reset, PendingAction.ResetAll),
+}
+
+@Composable
+private fun ButtonHint(text: String) {
+    Text(text, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
 }
 
 @Composable

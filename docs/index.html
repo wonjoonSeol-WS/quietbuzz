@@ -362,6 +362,26 @@
   @media (prefers-reduced-motion: reduce) {
     * { transition-duration: 0.001ms !important; }
   }
+  .screens {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin: 0;
+  }
+  .screens figure { margin: 0; }
+  .screens img, .callout-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .screens figcaption {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .callout-image { max-width: 280px; margin-top: 16px; }
 </style>
 </head>
 <body>
@@ -384,7 +404,7 @@
   <dl class="meta-grid">
     <div>
       <dt><span lang="en">Platform</span><span lang="ko">플랫폼</span></dt>
-      <dd>Android 13+ / One UI</dd>
+      <dd><span lang="en">Android 13+, tested on Galaxy Z Fold 8</span><span lang="ko">Android 13 이상, 갤럭시 Z 폴드 8에서 테스트</span></dd>
     </div>
     <div>
       <dt><span lang="en">Stack</span><span lang="ko">스택</span></dt>
@@ -408,6 +428,27 @@
       QuietBuzz가 그 빈자리를 채웁니다. 폰을 진동 모드로 두면, 직접 고른 허용 목록의 앱만 진동합니다.
       나머지 앱의 알림은 알림창에 그대로 보이되 조용히 옵니다. 새로 설치한 앱도 자동으로 처리됩니다.
     </p>
+  </section>
+
+  <section>
+    <h2><span lang="en">Screens</span><span lang="ko">화면</span></h2>
+    <div class="screens">
+      <figure>
+        <img lang="en" src="images/onboarding-en.png" alt="Permission screen explaining each permission" loading="lazy">
+        <img lang="ko" src="images/onboarding-ko.png" alt="각 권한을 설명하는 첫 화면" loading="lazy">
+        <figcaption><span lang="en">First launch: what each permission is for</span><span lang="ko">첫 실행: 권한이 왜 필요한지 설명</span></figcaption>
+      </figure>
+      <figure>
+        <img lang="en" src="images/status-en.png" alt="Status tab with Run now, Restore all, and Reset buttons" loading="lazy">
+        <img lang="ko" src="images/status-ko.png" alt="지금 실행, 모두 복원, 초기화 버튼이 있는 상태 탭" loading="lazy">
+        <figcaption><span lang="en">Status: run, restore, or reset</span><span lang="ko">상태: 실행, 복원, 초기화</span></figcaption>
+      </figure>
+      <figure>
+        <img lang="en" src="images/allowlist-en.png" alt="Allowlist tab with chosen apps at the top" loading="lazy">
+        <img lang="ko" src="images/allowlist-ko.png" alt="고른 앱이 위에 표시되는 허용 목록 탭" loading="lazy">
+        <figcaption><span lang="en">Allowlist: apps that still vibrate</span><span lang="ko">허용 목록: 계속 진동할 앱</span></figcaption>
+      </figure>
+    </div>
   </section>
 
   <section class="mechanism">
@@ -603,15 +644,20 @@
   <aside class="callout">
     <span class="callout-label"><span lang="en">Worth knowing</span><span lang="ko">참고 사항</span></span>
     <span lang="en">
-      Samsung's app-level "Sound and vibration" switch has no API, so QuietBuzz can't change it and it won't
-      reflect what QuietBuzz did. Check the per-category page instead, or use the app's Settings button to flip
-      it yourself. This is a personal, sideloaded project: not on the Play Store, no root required.
+      Android only lets QuietBuzz change the notification categories listed under each app. So QuietBuzz turns off
+      vibration for every item under App notifications &rsaquo; Notification categories. Some phones, like Samsung,
+      also show a switch at the top of the page ("Sound and vibration"). QuietBuzz can't change that one, so it may
+      still look on. Don't worry: vibration is still off. Personal, sideloaded project: not on the Play Store, no root
+      required.
     </span>
     <span lang="ko">
-      삼성의 앱 단위 "소리 및 진동" 스위치는 API가 없어서 QuietBuzz가 바꿀 수 없고, QuietBuzz가 바꾼 내용을
-      반영하지도 않습니다. 카테고리별 화면을 확인하거나, 앱의 설정 버튼으로 직접 바꿔주세요. Play 스토어에
-      올라가 있지 않은 개인용 사이드로드 프로젝트이며, 루팅이 필요 없습니다.
+      Android는 앱마다 아래쪽의 알림 카테고리별 설정만 바꿀 수 있게 해줍니다. 그래서 QuietBuzz는 앱 알림 &rsaquo; 알림
+      카테고리의 세부 항목들에서 진동을 모두 끕니다. 삼성 같은 일부 폰은 페이지 맨 위에 "소리 및 진동" 스위치도 있는데,
+      QuietBuzz는 이건 바꿀 수 없어서 켜져 보일 수 있어요. 꺼지지 않은 거라고 혼동하지 마세요. 진동은 꺼져 있습니다.
+      Play 스토어에 올라가 있지 않은 개인용 사이드로드 프로젝트이며, 루팅이 필요 없습니다.
     </span>
+    <img class="callout-image" lang="en" src="images/explainer-en.png" alt="Diagram: the top switch is not changed, the categories below are" loading="lazy">
+    <img class="callout-image" lang="ko" src="images/explainer-ko.png" alt="그림: 맨 위 스위치는 그대로, 아래 카테고리만 바뀜" loading="lazy">
   </aside>
 
   <footer class="closing">

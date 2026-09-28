@@ -19,7 +19,7 @@
     <string name="onboarding_notification_access_title">알림 접근 권한</string>
     <string name="onboarding_notification_access_body">허용 목록에 없는 앱의 진동을 끌 수 있게 해줍니다. 알림은 그대로 표시됩니다.</string>
     <string name="onboarding_bluetooth_title">기기 연결</string>
-    <string name="onboarding_bluetooth_body">안드로이드는 기기와 연결된 앱만 다른 앱의 설정을 바꿀 수 있게 합니다. 이어폰이나 워치처럼 본인 기기 아무거나 고르세요. 실제로 연결되지는 않습니다.</string>
+    <string name="onboarding_bluetooth_body">일반 앱은 다른 앱의 설정을 바꿀 수 없습니다. 블루투스나 Wi-Fi 기기 하나와 연결하면 QuietBuzz가 워치 앱처럼 \'기기와 연결된 앱\'으로 등록되어, 다른 앱의 알림 설정을 바꿀 수 있게 됩니다. 이어폰이나 워치처럼 본인 기기 아무거나 고르세요. 실제로 접속하지는 않습니다.</string>
     <string name="onboarding_notifications_title">QuietBuzz 알림</string>
     <string name="onboarding_notifications_body">선택 사항입니다. 기기 연결이 끊어지면 알려드립니다.</string>
     <string name="onboarding_status_granted">허용됨</string>
@@ -86,11 +86,11 @@
     <string name="allowlist_section_allowed">허용됨 (%1$d개)</string>
     <string name="allowlist_section_all_apps">전체 앱</string>
     <string name="allowlist_open_app_settings">설정</string>
-    <string name="allowlist_settings_hint">삼성 설정 맨 위의 \"소리 및 진동\" 스위치는 QuietBuzz가 바꿀 수 없습니다. 앱의 설정 버튼을 눌러 직접 바꿔주세요.</string>
+    <string name="allowlist_settings_hint">QuietBuzz는 앱의 알림 카테고리에서 진동을 끕니다. 삼성의 \"소리 및 진동\"처럼 페이지 맨 위에 있는 스위치는 켜져 보일 수 있어요. 앱의 설정 버튼을 누르면 카테고리를 확인할 수 있습니다.</string>
     <string name="allowlist_restored_one">%1$s 복원됨.</string>
     <string name="allowlist_silenced_one">%1$s 무음 처리됨.</string>
     <string name="explainer_title">QuietBuzz가 바꾸는 것</string>
-    <string name="explainer_body">삼성 알림 설정에서 앱마다 맨 위에 스위치가 있고, 그 아래에 카테고리 목록이 있습니다. QuietBuzz는 카테고리를 바꿉니다. 맨 위 스위치는 바꿀 수 없어서 켜진 채로 보일 수 있어요. 정상입니다.</string>
+    <string name="explainer_body">Android는 앱마다 아래쪽의 알림 카테고리별 설정만 바꿀 수 있게 해줍니다. 삼성 같은 일부 폰은 페이지 맨 위에 \"소리 및 진동\" 같은 스위치도 보여주는데, QuietBuzz는 이건 바꿀 수 없어서 켜져 보일 수 있어요. 꺼지지 않은 거라고 혼동하지 마세요. 진동은 꺼져 있습니다.</string>
     <string name="explainer_top_switch">소리 및 진동</string>
     <string name="explainer_top_note">QuietBuzz가 바꾸지 않음</string>
     <string name="explainer_categories">알림 카테고리</string>
@@ -98,4 +98,12 @@
     <string name="explainer_category_a">메시지</string>
     <string name="explainer_category_b">혜택 알림</string>
     <string name="explainer_vibration_off">진동 꺼짐</string>
+    <string name="status_restore_all_hint">QuietBuzz가 바꿀 때 저장해 둔 기록으로, 각 앱을 바꾸기 전 상태로 되돌립니다.</string>
+    <string name="status_reset_all_hint">저장된 기록을 쓰지 않고, 모든 앱의 소리와 진동을 다시 켭니다. 모두 복원 후에도 앱이 무음이면 이걸 쓰세요.</string>
+    <string name="status_run_title">지금 실행할까요?</string>
+    <string name="status_run_body">허용 목록에 없는 모든 앱의 진동을 끕니다. 알림은 그대로 표시되고, 소리는 벨소리 모드를 따릅니다.</string>
+    <string name="status_run_confirm">실행</string>
+    <string name="status_restore_title">모두 복원할까요?</string>
+    <string name="status_restore_body">저장해 둔 기록으로 각 앱을 QuietBuzz가 바꾸기 전 상태로 되돌립니다. 이후 저장된 기록은 삭제됩니다.\n\n그래도 앱이 무음이면 모두 기본값으로 초기화를 쓰세요.</string>
+    <string name="status_restore_confirm">복원</string>
 </resources>

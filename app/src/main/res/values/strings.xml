@@ -19,7 +19,7 @@
     <string name="onboarding_notification_access_title">Notification access</string>
     <string name="onboarding_notification_access_body">Lets QuietBuzz turn off vibration for apps that aren\'t on your allowlist. Their notifications still show up.</string>
     <string name="onboarding_bluetooth_title">Link a device</string>
-    <string name="onboarding_bluetooth_body">Android only lets QuietBuzz change other apps\' settings once it\'s linked to a device. Pick any device you own, like earbuds or a watch. QuietBuzz never actually connects to it.</string>
+    <string name="onboarding_bluetooth_body">Normal apps can\'t change other apps\' settings. Linking one Bluetooth or Wi-Fi device registers QuietBuzz as a linked-device app, like a smartwatch app, which Android allows to change other apps\' notification settings. Pick any device you own, like earbuds or a watch. QuietBuzz never actually connects to it.</string>
     <string name="onboarding_notifications_title">QuietBuzz alerts</string>
     <string name="onboarding_notifications_body">Optional. Lets QuietBuzz tell you if the device link stops working.</string>
     <string name="onboarding_status_granted">Granted</string>
@@ -86,11 +86,11 @@
     <string name="allowlist_section_allowed">Allowed (%1$d)</string>
     <string name="allowlist_section_all_apps">All apps</string>
     <string name="allowlist_open_app_settings">Settings</string>
-    <string name="allowlist_settings_hint">QuietBuzz can\'t change the \"Sound and vibration\" switch at the top of Samsung\'s settings. Tap Settings on an app to change it yourself.</string>
+    <string name="allowlist_settings_hint">QuietBuzz turns off vibration in each app\'s notification categories. A switch at the top of the page, like Samsung\'s \"Sound and vibration\", may still look on. Tap Settings on an app to see its categories.</string>
     <string name="allowlist_restored_one">Restored %1$s.</string>
     <string name="allowlist_silenced_one">Silenced %1$s.</string>
     <string name="explainer_title">What QuietBuzz changes</string>
-    <string name="explainer_body">In Samsung\'s notification settings, each app has a switch at the top and a list of categories below it. QuietBuzz changes the categories. It can\'t change the top switch, so that switch may still look on. That\'s normal.</string>
+    <string name="explainer_body">Android only lets QuietBuzz change the notification categories listed under each app. Some phones, like Samsung, also show a switch at the top of the page, such as \"Sound and vibration\". QuietBuzz can\'t change that one, so it may still look on. Don\'t worry: vibration is still off.</string>
     <string name="explainer_top_switch">Sound and vibration</string>
     <string name="explainer_top_note">Not changed by QuietBuzz</string>
     <string name="explainer_categories">Notification categories</string>
@@ -98,4 +98,12 @@
     <string name="explainer_category_a">Messages</string>
     <string name="explainer_category_b">Promotions</string>
     <string name="explainer_vibration_off">Vibration off</string>
+    <string name="status_restore_all_hint">Puts each app back the way it was before QuietBuzz changed it, using what QuietBuzz saved at the time.</string>
+    <string name="status_reset_all_hint">Ignores that saved record and turns sound and vibration back on for every app. Use this if apps are still muted after Restore all.</string>
+    <string name="status_run_title">Run now?</string>
+    <string name="status_run_body">Turns off vibration for every app not on your allowlist. Their notifications still show up, and sound follows your ringer mode.</string>
+    <string name="status_run_confirm">Run</string>
+    <string name="status_restore_title">Restore all?</string>
+    <string name="status_restore_body">Puts each app back the way it was before QuietBuzz changed it, using what QuietBuzz saved at the time. The saved record is then cleared.\n\nIf apps are still muted afterwards, use Reset all to defaults.</string>
+    <string name="status_restore_confirm">Restore</string>
 </resources>
