@@ -105,7 +105,7 @@ fun DebugScreen(installedAppsRepository: InstalledAppsRepository, allowlistRepos
         Text(
             "Flip importance / sound / vibration independently per channel, then check the app's " +
                 "notification settings page to see which one moves it. Changes here are immediate, " +
-                "raw, and NOT backed up -- \"모두 복원\" won't undo anything done on this screen.",
+                "raw, and NOT backed up. \"모두 복원\" won't undo anything done on this screen.",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.error,
         )
@@ -169,9 +169,9 @@ fun DebugScreen(installedAppsRepository: InstalledAppsRepository, allowlistRepos
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     if (isAllowlisted) {
-                        "On allowlist -- QuietBuzz never touches this app's channels"
+                        "On allowlist. QuietBuzz never touches this app's channels"
                     } else {
-                        "NOT on allowlist -- QuietBuzz will silence this app again on the next pass or reinstall, undoing anything set here or in the app's own settings"
+                        "NOT on allowlist. QuietBuzz will silence this app again on the next pass or reinstall, undoing anything set here or in the app's own settings"
                     },
                     modifier = Modifier.weight(1f),
                     style = MaterialTheme.typography.bodySmall,

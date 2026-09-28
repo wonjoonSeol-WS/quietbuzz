@@ -92,12 +92,14 @@ fun StatusScreen(
         StatusRow(stringResource(R.string.status_allowlist_size), stringResource(R.string.status_apps_count, allowlist.size))
         StatusRow(
             stringResource(R.string.status_last_pass),
-            buildString {
-                append(formatTimestamp(lastPassSummary.lastRunAtMillis))
-                append(" -- ")
-                append(stringResource(R.string.status_last_pass_summary, lastPassSummary.appsChanged, lastPassSummary.channelsChanged))
-                if (lastPassSummary.failures > 0) append(stringResource(R.string.status_failures_suffix, lastPassSummary.failures))
-            },
+            lastPassSummary.lastRunAtMillis?.let { millis ->
+                buildString {
+                    append(formatTimestamp(millis))
+                    append(", ")
+                    append(stringResource(R.string.status_last_pass_summary, lastPassSummary.appsChanged, lastPassSummary.channelsChanged))
+                    if (lastPassSummary.failures > 0) append(stringResource(R.string.status_failures_suffix, lastPassSummary.failures))
+                }
+            } ?: stringResource(R.string.status_never),
         )
 
         if (associationLost) {
@@ -217,8 +219,7 @@ private fun StatusRow(label: String, value: String) {
     }
 }
 
-private fun formatTimestamp(millis: Long?): String {
-    if (millis == null) return "--"
+private fun formatTimestamp(millis: Long): String {
     val formatter = DateTimeFormatter.ofPattern("MMM d, HH:mm").withZone(ZoneId.systemDefault())
     return formatter.format(Instant.ofEpochMilli(millis))
 }
