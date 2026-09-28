@@ -371,8 +371,8 @@
     <div class="hero-text">
       <h1>QuietBuzz</h1>
       <p class="subtitle">
-        <span lang="en">Silence every app's notifications except the ones you choose &mdash; without touching Do Not Disturb.</span>
-        <span lang="ko">직접 고른 앱만 남기고 나머지 알림의 소리와 진동을 모두 끕니다 &mdash; 방해 금지 모드는 건드리지 않고.</span>
+        <span lang="en">Turn off notification vibration for every app except the ones you choose, without touching Do Not Disturb.</span>
+        <span lang="ko">직접 고른 앱만 남기고 나머지 앱의 알림 진동을 끕니다. 방해 금지 모드는 건드리지 않습니다.</span>
       </p>
     </div>
     <div id="lang-toggle" role="group" aria-label="Language">
@@ -384,11 +384,11 @@
   <dl class="meta-grid">
     <div>
       <dt><span lang="en">Platform</span><span lang="ko">플랫폼</span></dt>
-      <dd>Android 13+ &middot; One UI</dd>
+      <dd>Android 13+ / One UI</dd>
     </div>
     <div>
       <dt><span lang="en">Stack</span><span lang="ko">스택</span></dt>
-      <dd>Kotlin &middot; Jetpack Compose</dd>
+      <dd>Kotlin / Jetpack Compose</dd>
     </div>
     <div>
       <dt><span lang="en">Source</span><span lang="ko">저장소</span></dt>
@@ -398,41 +398,45 @@
 
   <section class="lead">
     <p lang="en">
-      Most Android phones only stay quiet if you turn notifications off one app, one channel at a time &mdash;
-      and the setting resets every time you install something new. QuietBuzz does the opposite: it silences
-      sound and vibration everywhere except a small allowlist you choose, while keeping every notification
-      fully visible in the shade. No Do Not Disturb icon, no forgotten muted apps, no re-tuning after every
-      new install.
+      Android lets you put the whole phone in vibrate mode, but not choose which apps get to vibrate. QuietBuzz
+      fills that gap: keep the phone in vibrate mode, and only a small allowlist you choose still buzzes. Every
+      other app's notifications stay fully visible in the shade, silently. New installs are handled
+      automatically.
     </p>
     <p lang="ko">
-      대부분의 안드로이드 폰은 앱마다, 채널마다 일일이 알림을 꺼야만 조용해지고, 새 앱을 설치할 때마다
-      그 설정은 다시 초기화됩니다. QuietBuzz는 반대로 동작합니다 &mdash; 직접 고른 소수의 허용 목록만
-      남기고 나머지 모든 앱의 소리와 진동을 끄면서도, 알림 자체는 알림창에 그대로 보여줍니다. 방해 금지
-      아이콘도 없고, 깜빡 잊고 무음으로 남겨둔 앱도 없고, 새 앱을 설치할 때마다 다시 설정할 필요도 없습니다.
+      안드로이드는 폰 전체를 진동 모드로 둘 수는 있지만, 어떤 앱만 진동하게 할지는 고를 수 없습니다.
+      QuietBuzz가 그 빈자리를 채웁니다. 폰을 진동 모드로 두면, 직접 고른 허용 목록의 앱만 진동합니다.
+      나머지 앱의 알림은 알림창에 그대로 보이되 조용히 옵니다. 새로 설치한 앱도 자동으로 처리됩니다.
     </p>
   </section>
 
   <section class="mechanism">
     <h2><span lang="en">How it works</span><span lang="ko">작동 원리</span></h2>
     <p lang="en">
-      Android normally refuses this. A notification channel's importance level controls sound and vibration,
-      but only two kinds of caller can change <em>another</em> app's channel importance from outside that app:
+      Only two kinds of caller can change <em>another</em> app's notification channels from outside that app:
       the single system-wide Notification Assistant role, or a <code>NotificationListenerService</code> whose
-      app also holds a <code>CompanionDeviceManager</code> association &mdash; stated directly in Android's own
-      API reference, not a workaround. QuietBuzz uses the second path: pairing with any nearby Bluetooth device
-      (nothing about the device is used afterward &mdash; it's a permission token, not a connection) satisfies
-      that requirement, then the listener lowers every non-allowlisted app's channels to
-      <code>IMPORTANCE_LOW</code> &mdash; shown in the shade, no sound, no vibration.
+      app also holds a <code>CompanionDeviceManager</code> association. That's stated in Android's own API
+      reference; it isn't a workaround. QuietBuzz uses the second path. Linking any nearby device satisfies the
+      requirement (the device is never used afterward; it's a permission token, not a connection). The listener
+      then turns vibration off on every non-allowlisted app's channels.
+    </p>
+    <p lang="en">
+      That's the only thing it changes. Importance and sound are left alone, so an app's custom ringtone is
+      never lost. Sound follows the phone's ringer mode: in vibrate mode no app plays sound anyway, and in sound
+      mode every app plays sound normally.
     </p>
     <p lang="ko">
-      안드로이드는 원래 이걸 허용하지 않습니다. 알림 채널의 중요도(importance)가 소리와 진동을 결정하지만,
-      <em>다른</em> 앱의 채널 중요도를 외부에서 바꿀 수 있는 건 딱 두 경우뿐입니다: 시스템 전체에서 단 하나만
+      <em>다른</em> 앱의 알림 채널을 외부에서 바꿀 수 있는 건 딱 두 경우뿐입니다. 시스템 전체에서 단 하나만
       존재하는 알림 어시스턴트(Notification Assistant) 역할이거나, <code>CompanionDeviceManager</code> 연결을
-      보유한 <code>NotificationListenerService</code> &mdash; 이는 안드로이드 공식 API 문서에 직접 명시된
-      내용으로, 우회 편법이 아닙니다. QuietBuzz는 두 번째 방법을 사용합니다: 근처 블루투스 기기 아무거나와
-      페어링하면(페어링 이후 그 기기는 전혀 사용되지 않습니다 &mdash; 연결이 아니라 권한 토큰일 뿐입니다)
-      이 조건을 만족하고, 이후 리스너가 허용 목록에 없는 모든 앱의 채널을 <code>IMPORTANCE_LOW</code>로
-      낮춥니다 &mdash; 알림창에는 그대로 보이지만 소리도 진동도 없습니다.
+      보유한 <code>NotificationListenerService</code>입니다. 안드로이드 공식 API 문서에 명시된 내용이며,
+      우회 편법이 아닙니다. QuietBuzz는 두 번째 방법을 사용합니다. 근처 기기 아무거나와 연결하면 조건을
+      만족하고(그 기기는 이후 전혀 사용되지 않으며, 연결이 아니라 권한 토큰일 뿐입니다), 리스너가 허용 목록에
+      없는 모든 앱의 채널에서 진동을 끕니다.
+    </p>
+    <p lang="ko">
+      바꾸는 건 진동뿐입니다. 중요도와 소리는 건드리지 않으므로 앱의 사용자 지정 알림음이 사라지지 않습니다.
+      소리는 폰의 벨소리 모드를 따릅니다. 진동 모드에서는 어떤 앱도 소리를 내지 않고, 소리 모드에서는 모든
+      앱이 평소처럼 소리를 냅니다.
     </p>
   </section>
 
@@ -455,14 +459,14 @@
             <span lang="en">App installed</span><span lang="ko">앱 설치됨</span>
           </th>
           <td data-label="What happens">
-            <span lang="en">Silenced within seconds.</span>
-            <span lang="ko">설치 즉시(수 초 내) 자동으로 무음 처리됩니다.</span>
+            <span lang="en">Vibration turned off within seconds.</span>
+            <span lang="ko">설치 후 수 초 안에 자동으로 진동이 꺼집니다.</span>
           </td>
         </tr>
         <tr>
           <th scope="row" data-label="Trigger">
-            <span lang="en">Listener (re)connects &mdash; boot, fresh grant, reconnect</span>
-            <span lang="ko">리스너 (재)연결 &mdash; 부팅, 최초 권한 허용, 재연결</span>
+            <span lang="en">Listener (re)connects: boot, fresh grant, reconnect</span>
+            <span lang="ko">리스너 (재)연결: 부팅, 최초 권한 허용, 재연결</span>
           </th>
           <td data-label="What happens">
             <span lang="en">Full pass over every installed app.</span>
@@ -483,8 +487,27 @@
             <span lang="en">You tap "Restore all"</span><span lang="ko">"모두 복원" 버튼</span>
           </th>
           <td data-label="What happens">
-            <span lang="en">Reverts every channel QuietBuzz changed back to its original importance.</span>
-            <span lang="ko">QuietBuzz가 바꾼 모든 채널을 원래 중요도로 되돌립니다.</span>
+            <span lang="en">Reverts every channel QuietBuzz changed back to how it was before.</span>
+            <span lang="ko">QuietBuzz가 바꾼 모든 채널을 원래 상태로 되돌립니다.</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-label="Trigger">
+            <span lang="en">You tap "Reset all to defaults"</span><span lang="ko">"모두 기본값으로 초기화" 버튼</span>
+          </th>
+          <td data-label="What happens">
+            <span lang="en">Recovery that ignores the backup: silent (LOW) categories go back to normal, vibration comes back on.</span>
+            <span lang="ko">백업을 쓰지 않는 복구 기능입니다. 무음(LOW) 카테고리를 원래대로 되돌리고 진동을 다시 켭니다.</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-label="Trigger">
+            <span lang="en">You check or uncheck an app in the allowlist</span>
+            <span lang="ko">허용 목록에서 앱을 체크하거나 해제</span>
+          </th>
+          <td data-label="What happens">
+            <span lang="en">Checking restores its vibration right away; unchecking turns it off right away.</span>
+            <span lang="ko">체크하면 바로 진동이 복원되고, 해제하면 바로 꺼집니다.</span>
           </td>
         </tr>
         <tr>
@@ -493,8 +516,8 @@
             <span lang="ko">기존 앱이 나중에 새 채널을 추가함</span>
           </th>
           <td data-label="What happens">
-            <span lang="en">Not automatic &mdash; tap "Run now" if you notice one buzzing.</span>
-            <span lang="ko">자동 처리 대상이 아닙니다 &mdash; 알림이 울리면 "지금 실행"을 눌러주세요.</span>
+            <span lang="en">Not automatic: tap "Run now" if you notice one buzzing.</span>
+            <span lang="ko">자동 처리 대상이 아닙니다: 알림이 울리면 "지금 실행"을 눌러주세요.</span>
           </td>
         </tr>
       </tbody>
@@ -513,8 +536,8 @@
             <span lang="en">Allow restricted settings</span><span lang="ko">제한된 설정 허용</span>
           </span>
           <span class="step-detail">
-            <span lang="en">Settings &rsaquo; Apps &rsaquo; QuietBuzz &rsaquo; &#8942; &rsaquo; <code>Allow restricted settings</code> &mdash; required for a sideloaded app.</span>
-            <span lang="ko">설정 &rsaquo; 앱 &rsaquo; QuietBuzz &rsaquo; &#8942; &rsaquo; <code>제한된 설정 허용</code> &mdash; 사이드로드한 앱에는 필수입니다.</span>
+            <span lang="en">Settings &rsaquo; Apps &rsaquo; QuietBuzz &rsaquo; &#8942; &rsaquo; <code>Allow restricted settings</code>: required for a sideloaded app.</span>
+            <span lang="ko">설정 &rsaquo; 앱 &rsaquo; QuietBuzz &rsaquo; &#8942; &rsaquo; <code>제한된 설정 허용</code>: 사이드로드한 앱에는 필수입니다.</span>
           </span>
         </span>
       </li>
@@ -527,8 +550,8 @@
             <span lang="en">Grant notification access</span><span lang="ko">알림 접근 권한 허용</span>
           </span>
           <span class="step-detail">
-            <span lang="en">Special access &rsaquo; Notification access &rsaquo; enable QuietBuzz.</span>
-            <span lang="ko">특수 접근 권한 &rsaquo; 알림 접근 &rsaquo; QuietBuzz 활성화.</span>
+            <span lang="en">The app's first screen explains each permission and opens the right settings page for you.</span>
+            <span lang="ko">앱의 첫 화면에서 각 권한이 왜 필요한지 설명하고, 해당 설정 화면을 바로 열어줍니다.</span>
           </span>
         </span>
       </li>
@@ -541,8 +564,8 @@
             <span lang="en">Link a device</span><span lang="ko">기기 연결</span>
           </span>
           <span class="step-detail">
-            <span lang="en">Pick any nearby Bluetooth device from the system picker &mdash; it doesn't matter which.</span>
-            <span lang="ko">시스템 선택 창에서 근처 블루투스 기기 아무거나 선택하세요 &mdash; 어떤 기기든 상관없습니다.</span>
+            <span lang="en">Pick any nearby device from the system picker. It doesn't matter which; prefer one you own.</span>
+            <span lang="ko">시스템 선택 창에서 근처 기기 아무거나 고르세요. 어떤 기기든 상관없지만, 본인 소유 기기를 권장합니다.</span>
           </span>
         </span>
       </li>
@@ -552,7 +575,7 @@
         </span>
         <span class="step-body">
           <span class="step-title">
-            <span lang="en">Run now &mdash; or just wait</span><span lang="ko">지금 실행 &mdash; 또는 그냥 기다리기</span>
+            <span lang="en">Run now, or just wait</span><span lang="ko">지금 실행 또는 그냥 기다리기</span>
           </span>
           <span class="step-detail">
             <span lang="en">New app installs are caught automatically from here on.</span>
@@ -580,14 +603,14 @@
   <aside class="callout">
     <span class="callout-label"><span lang="en">Worth knowing</span><span lang="ko">참고 사항</span></span>
     <span lang="en">
-      This is a personal, sideloaded project &mdash; not on the Play Store, no root required. If the paired
-      device's association is ever revoked, QuietBuzz posts a notification asking you to re-link; it silences
-      nothing until you do.
+      Samsung's app-level "Sound and vibration" switch has no API, so QuietBuzz can't change it and it won't
+      reflect what QuietBuzz did. Check the per-category page instead, or use the app's Settings button to flip
+      it yourself. This is a personal, sideloaded project: not on the Play Store, no root required.
     </span>
     <span lang="ko">
-      Play 스토어에 올라가 있지 않은 개인용 사이드로드 프로젝트이며, 루팅이 필요 없습니다. 연결된 기기의
-      권한이 해제되면 QuietBuzz가 재연결을 요청하는 알림을 띄우며, 재연결 전까지는 아무것도 무음 처리하지
-      않습니다.
+      삼성의 앱 단위 "소리 및 진동" 스위치는 API가 없어서 QuietBuzz가 바꿀 수 없고, QuietBuzz가 바꾼 내용을
+      반영하지도 않습니다. 카테고리별 화면을 확인하거나, 앱의 설정 버튼으로 직접 바꿔주세요. Play 스토어에
+      올라가 있지 않은 개인용 사이드로드 프로젝트이며, 루팅이 필요 없습니다.
     </span>
   </aside>
 
