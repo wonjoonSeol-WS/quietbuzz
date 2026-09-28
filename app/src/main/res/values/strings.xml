@@ -89,4 +89,13 @@
     <string name="allowlist_settings_hint">QuietBuzz can\'t change the \"Sound and vibration\" switch at the top of Samsung\'s settings. Tap Settings on an app to change it yourself.</string>
     <string name="allowlist_restored_one">Restored %1$s.</string>
     <string name="allowlist_silenced_one">Silenced %1$s.</string>
+    <string name="explainer_title">What QuietBuzz changes</string>
+    <string name="explainer_body">In Samsung\'s notification settings, each app has a switch at the top and a list of categories below it. QuietBuzz changes the categories. It can\'t change the top switch, so that switch may still look on. That\'s normal.</string>
+    <string name="explainer_top_switch">Sound and vibration</string>
+    <string name="explainer_top_note">Not changed by QuietBuzz</string>
+    <string name="explainer_categories">Notification categories</string>
+    <string name="explainer_categories_note">QuietBuzz changes these</string>
+    <string name="explainer_category_a">Messages</string>
+    <string name="explainer_category_b">Promotions</string>
+    <string name="explainer_vibration_off">Vibration off</string>
 </resources>

@@ -89,4 +89,13 @@
     <string name="allowlist_settings_hint">삼성 설정 맨 위의 \"소리 및 진동\" 스위치는 QuietBuzz가 바꿀 수 없습니다. 앱의 설정 버튼을 눌러 직접 바꿔주세요.</string>
     <string name="allowlist_restored_one">%1$s 복원됨.</string>
     <string name="allowlist_silenced_one">%1$s 무음 처리됨.</string>
+    <string name="explainer_title">QuietBuzz가 바꾸는 것</string>
+    <string name="explainer_body">삼성 알림 설정에서 앱마다 맨 위에 스위치가 있고, 그 아래에 카테고리 목록이 있습니다. QuietBuzz는 카테고리를 바꿉니다. 맨 위 스위치는 바꿀 수 없어서 켜진 채로 보일 수 있어요. 정상입니다.</string>
+    <string name="explainer_top_switch">소리 및 진동</string>
+    <string name="explainer_top_note">QuietBuzz가 바꾸지 않음</string>
+    <string name="explainer_categories">알림 카테고리</string>
+    <string name="explainer_categories_note">QuietBuzz가 바꾸는 곳</string>
+    <string name="explainer_category_a">메시지</string>
+    <string name="explainer_category_b">혜택 알림</string>
+    <string name="explainer_vibration_off">진동 꺼짐</string>
 </resources>

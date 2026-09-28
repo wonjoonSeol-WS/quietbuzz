@@ -96,6 +96,8 @@ fun OnboardingScreen(
             onAction = onRequestPostNotifications,
         )
 
+        CategoryExplainer(modifier = Modifier.padding(vertical = 8.dp))
+
         if (!requiredDone) {
             Text(
                 stringResource(R.string.onboarding_continue_hint),

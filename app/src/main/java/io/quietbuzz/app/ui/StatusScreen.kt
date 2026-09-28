@@ -196,6 +196,10 @@ fun StatusScreen(
 
         HorizontalDivider()
 
+        CategoryExplainer()
+
+        HorizontalDivider()
+
         Text(stringResource(R.string.status_advanced), style = MaterialTheme.typography.titleMedium)
         Row(
             modifier = Modifier.fillMaxWidth(),
