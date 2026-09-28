@@ -35,7 +35,14 @@ Works on Android 13 and later. Tested on a Samsung Galaxy Z Fold 8.
 - New apps are handled automatically when you install them.
 - Why link a device? Normal apps can't change other apps' settings. Linking one Bluetooth or Wi-Fi device registers QuietBuzz as a linked-device app, like a smartwatch app, which Android allows to change other apps' notification settings. QuietBuzz never actually connects to the device.
 
-<img src="docs/images/explainer-en.png" width="240" alt="What QuietBuzz changes">
+### How to check it worked
+
+Open **Settings > Apps > (an app) > Notifications**, then tap one of its categories. **Vibration** should be off. This is the page QuietBuzz changes, not the switch at the top.
+
+<p>
+  <img src="docs/images/explainer-en.png" width="240" alt="What QuietBuzz changes">
+  <img src="docs/images/category-en.png" width="240" alt="A notification category with Vibration off">
+</p>
 
 More detail: [Technical notes](docs/TECHNICAL.md)
 
@@ -72,6 +79,13 @@ Android 13 이상에서 동작합니다. 삼성 갤럭시 Z 폴드 8에서 테�
 - 새로 설치한 앱은 자동으로 처리됩니다.
 - 왜 기기를 연결하나요? 일반 앱은 다른 앱의 설정을 바꿀 수 없습니다. 블루투스나 Wi-Fi 기기 하나와 연결하면 QuietBuzz가 워치 앱처럼 '기기와 연결된 앱'으로 등록되어, 다른 앱의 알림 설정을 바꿀 수 있게 됩니다. 연결한 기기에 실제로 접속하지는 않습니다.
 
-<img src="docs/images/explainer-ko.png" width="240" alt="QuietBuzz가 바꾸는 것">
+### 잘 적용됐는지 확인하기
+
+**설정 > 애플리케이션 > (앱) > 알림**에서 **알림 카테고리** 중 하나를 누르세요. **진동**이 꺼져 있으면 됩니다. QuietBuzz가 바꾸는 곳은 맨 위 스위치가 아니라 이 화면입니다.
+
+<p>
+  <img src="docs/images/explainer-ko.png" width="240" alt="QuietBuzz가 바꾸는 것">
+  <img src="docs/images/category-ko.png" width="240" alt="진동이 꺼진 알림 카테고리 화면">
+</p>
 
 자세한 내용: [Technical notes](docs/TECHNICAL.md) (영어)
