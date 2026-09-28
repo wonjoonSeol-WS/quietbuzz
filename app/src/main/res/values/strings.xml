@@ -1,3 +1,92 @@
 <resources>
     <string name="app_name">QuietBuzz</string>
+
+    <!-- Navigation -->
+    <string name="nav_status">Status</string>
+    <string name="nav_allowlist">Allowlist</string>
+    <string name="nav_log">Log</string>
+
+    <!-- Log screen -->
+    <string name="log_copy">Copy</string>
+    <string name="log_clear">Clear</string>
+    <string name="log_copied">Copied to clipboard.</string>
+    <string name="log_empty">No log entries yet. Run a pass on the Status tab to see what happens here.</string>
+    <string name="log_entry_count">%1$d entries</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Before you start</string>
+    <string name="onboarding_subtitle">QuietBuzz needs three permissions to work. Here\'s exactly why.</string>
+    <string name="onboarding_notification_access_title">Notification access</string>
+    <string name="onboarding_notification_access_body">This is what lets QuietBuzz read and adjust other apps\' notification settings -- specifically, lowering a channel\'s importance so it stays silent instead of turning notifications off entirely.</string>
+    <string name="onboarding_bluetooth_title">Nearby devices (Bluetooth)</string>
+    <string name="onboarding_bluetooth_body">Android only allows an app to change another app\'s notification settings if it\'s either the single system-wide Notification Assistant, or paired with a device through CompanionDeviceManager. QuietBuzz uses the second option. Linking with any nearby device (Bluetooth or Wi-Fi, either works) satisfies this -- nothing about that device is used afterward. It\'s a permission token, not a connection. Prefer a device you personally own (phone, earbuds, watch, laptop) over shared or office equipment -- for some device types this flow can trigger real Bluetooth bonding as a side effect, which would leave a paired-device record on that equipment tied to your phone.</string>
+    <string name="onboarding_notifications_title">Notifications for QuietBuzz itself</string>
+    <string name="onboarding_notifications_body">So QuietBuzz can alert you if the linked device\'s permission is ever revoked and it needs to be re-linked.</string>
+    <string name="onboarding_status_granted">Granted</string>
+    <string name="onboarding_status_not_granted">Not granted</string>
+    <string name="onboarding_status_linked">Linked</string>
+    <string name="onboarding_status_not_linked">Not linked</string>
+    <string name="onboarding_action_open_settings">Open notification access settings</string>
+    <string name="onboarding_action_link_device">Link a device</string>
+    <string name="onboarding_link_failed">Link failed: %1$s</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_continue_hint">Notification access and a linked device are required to continue.</string>
+    <string name="onboarding_action_allow_notifications">Allow notifications</string>
+    <string name="onboarding_restricted_settings_hint">Switch greyed out? Sideloaded apps first need Settings > Apps > QuietBuzz > top-right menu > Allow restricted settings.</string>
+
+    <!-- Status screen -->
+    <string name="status_notification_access">Notification access</string>
+    <string name="status_granted">Granted</string>
+    <string name="status_not_granted">Not granted</string>
+    <string name="status_device_linked">Device linked</string>
+    <string name="status_yes_with_count">Yes (%1$d)</string>
+    <string name="status_no">No</string>
+    <string name="status_listener_connected">Listener connected right now</string>
+    <string name="status_listener_yes">Yes</string>
+    <string name="status_listener_no">No (normal when the app is idle)</string>
+    <string name="status_allowlist_size">Allowlist size</string>
+    <string name="status_apps_count">%1$d apps</string>
+    <string name="status_last_pass">Last pass</string>
+    <string name="status_never">Never</string>
+    <string name="status_last_pass_summary">%1$d apps / %2$d channels changed</string>
+    <string name="status_failures_suffix">, %1$d failures</string>
+    <string name="status_association_lost">Association lost -- re-link a device below before running a pass.</string>
+    <string name="status_link_device">Link a device</string>
+    <string name="status_linked_confirm">Linked.</string>
+    <string name="status_link_failed">Link failed: %1$s</string>
+    <string name="status_open_notification_settings">Open notification access settings</string>
+    <string name="status_run_now">Run now</string>
+    <string name="status_pass_complete">Silence pass complete.</string>
+    <string name="status_queued_run">Listener not connected -- queued, will run once it reconnects.</string>
+    <string name="status_restore_all">Restore all</string>
+    <string name="status_restored_confirm">Restored.</string>
+    <string name="status_queued_restore">Listener not connected -- queued, will restore once it reconnects.</string>
+    <string name="status_reset_all">Reset all to defaults</string>
+    <string name="status_reset_title">Reset without the backup?</string>
+    <string name="status_reset_body">For every app (allowlisted or not), raises LOW categories to DEFAULT, turns vibration back on, and gives categories with no sound the default notification sound. Categories you turned off, and custom ringtones, are left alone. The backup is then cleared.\n\nSome categories are quiet on purpose (music playback, download progress). They\'ll be raised too and may start making sound; fix those by hand.\n\nAfterwards, tap Run now to turn vibration off again.</string>
+    <string name="status_reset_confirm">Reset</string>
+    <string name="status_reset_cancel">Cancel</string>
+    <string name="status_reset_done">Reset to defaults.</string>
+    <string name="status_queued_reset">Listener not connected. Queued, will reset once it reconnects.</string>
+    <string name="status_advanced">Advanced</string>
+    <string name="status_include_system_apps">Include system apps in passes</string>
+
+    <!-- Allowlist screen -->
+    <string name="allowlist_title">Allowlist</string>
+    <string name="allowlist_export">Export</string>
+    <string name="allowlist_import">Import</string>
+    <string name="allowlist_exported">Exported %1$d apps.</string>
+    <string name="allowlist_imported">Imported %1$d apps.</string>
+    <string name="allowlist_import_failed_invalid">Import failed: not a valid QuietBuzz settings file.</string>
+    <string name="allowlist_import_failed_read">Import failed: couldn\'t read that file.</string>
+    <string name="allowlist_search_hint">Search installed apps</string>
+    <string name="allowlist_only_notifications_on">Only apps with notifications on</string>
+    <string name="allowlist_show_system_apps">Show system apps</string>
+    <string name="allowlist_summary">%1$d allowed -- %2$d shown</string>
+    <string name="allowlist_section_allowed">Allowed (%1$d)</string>
+    <string name="allowlist_section_all_apps">All apps</string>
+    <string name="allowlist_open_app_settings">Settings</string>
+    <string name="allowlist_settings_hint">Samsung\'s app-level \"Sound and vibration\" switch has no API, so QuietBuzz can\'t change it or keep it in sync. Tap Settings on an app to open its notification page and flip it yourself.</string>
+    <string name="allowlist_restored_one">Restored %1$s.</string>
+    <string name="allowlist_silenced_one">Silenced %1$s.</string>
 </resources>

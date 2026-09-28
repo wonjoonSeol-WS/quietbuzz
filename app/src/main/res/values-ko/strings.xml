@@ -1,0 +1,92 @@
+<resources>
+    <string name="app_name">QuietBuzz</string>
+
+    <!-- Navigation -->
+    <string name="nav_status">상태</string>
+    <string name="nav_allowlist">허용 목록</string>
+    <string name="nav_log">로그</string>
+
+    <!-- Log screen -->
+    <string name="log_copy">복사</string>
+    <string name="log_clear">지우기</string>
+    <string name="log_copied">클립보드에 복사했습니다.</string>
+    <string name="log_empty">아직 로그가 없습니다. 상태 탭에서 처리를 실행하면 여기에 표시됩니다.</string>
+    <string name="log_entry_count">%1$d개 항목</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">시작하기 전에</string>
+    <string name="onboarding_subtitle">QuietBuzz가 동작하려면 권한 3가지가 필요합니다. 각각 왜 필요한지 알려드릴게요.</string>
+    <string name="onboarding_notification_access_title">알림 접근 권한</string>
+    <string name="onboarding_notification_access_body">다른 앱의 알림 설정을 읽고 조정할 수 있게 해주는 권한입니다 -- 구체적으로는, 알림을 완전히 끄는 대신 채널의 중요도를 낮춰 조용하게 유지합니다.</string>
+    <string name="onboarding_bluetooth_title">주변 기기 (블루투스)</string>
+    <string name="onboarding_bluetooth_body">안드로이드는 다른 앱의 알림 설정을 바꿀 수 있는 앱을, 시스템 전체에서 단 하나뿐인 알림 어시스턴트이거나 CompanionDeviceManager로 기기와 연결된 앱, 이 두 경우로만 제한합니다. QuietBuzz는 두 번째 방법을 사용합니다. 근처 기기 아무거나(블루투스든 Wi-Fi든 상관없습니다)와 연결하면 이 조건을 만족합니다 -- 이후 그 기기는 전혀 사용되지 않습니다. 연결이 아니라 권한 토큰일 뿐입니다. 회사나 공용 기기보다는 본인 소유의 기기(휴대폰, 이어폰, 워치, 노트북 등)를 고르시는 걸 권장합니다 -- 일부 기기 종류는 이 과정에서 실제 블루투스 페어링(본딩)이 함께 일어날 수 있어, 공용 기기에 내 휴대폰이 페어링된 기록이 남을 수 있기 때문입니다.</string>
+    <string name="onboarding_notifications_title">QuietBuzz 자체의 알림 권한</string>
+    <string name="onboarding_notifications_body">연결된 기기의 권한이 해제되어 다시 연결이 필요할 때 알려드리기 위해서입니다.</string>
+    <string name="onboarding_status_granted">허용됨</string>
+    <string name="onboarding_status_not_granted">허용 안 됨</string>
+    <string name="onboarding_status_linked">연결됨</string>
+    <string name="onboarding_status_not_linked">연결 안 됨</string>
+    <string name="onboarding_action_open_settings">알림 접근 설정 열기</string>
+    <string name="onboarding_action_link_device">기기 연결</string>
+    <string name="onboarding_link_failed">연결 실패: %1$s</string>
+    <string name="onboarding_continue">계속</string>
+    <string name="onboarding_continue_hint">계속하려면 알림 접근 권한과 기기 연결이 필요합니다.</string>
+    <string name="onboarding_action_allow_notifications">알림 허용</string>
+    <string name="onboarding_restricted_settings_hint">스위치가 회색으로 비활성화되어 있나요? 직접 설치한 앱은 먼저 설정 > 애플리케이션 > QuietBuzz > 오른쪽 위 메뉴 > 제한된 설정 허용을 눌러야 합니다.</string>
+
+    <!-- Status screen -->
+    <string name="status_notification_access">알림 접근 권한</string>
+    <string name="status_granted">허용됨</string>
+    <string name="status_not_granted">허용 안 됨</string>
+    <string name="status_device_linked">기기 연결됨</string>
+    <string name="status_yes_with_count">예 (%1$d개)</string>
+    <string name="status_no">아니요</string>
+    <string name="status_listener_connected">현재 리스너 연결 상태</string>
+    <string name="status_listener_yes">예</string>
+    <string name="status_listener_no">아니요 (앱이 대기 중일 때는 정상입니다)</string>
+    <string name="status_allowlist_size">허용 목록 개수</string>
+    <string name="status_apps_count">앱 %1$d개</string>
+    <string name="status_last_pass">마지막 처리</string>
+    <string name="status_never">없음</string>
+    <string name="status_last_pass_summary">앱 %1$d개 / 채널 %2$d개 변경</string>
+    <string name="status_failures_suffix">, 실패 %1$d건</string>
+    <string name="status_association_lost">연결이 끊어졌습니다 -- 처리를 실행하기 전에 아래에서 기기를 다시 연결하세요.</string>
+    <string name="status_link_device">기기 연결</string>
+    <string name="status_linked_confirm">연결되었습니다.</string>
+    <string name="status_link_failed">연결 실패: %1$s</string>
+    <string name="status_open_notification_settings">알림 접근 설정 열기</string>
+    <string name="status_run_now">지금 실행</string>
+    <string name="status_pass_complete">무음 처리가 완료되었습니다.</string>
+    <string name="status_queued_run">리스너가 연결되어 있지 않습니다 -- 재연결되면 자동으로 실행됩니다.</string>
+    <string name="status_restore_all">모두 복원</string>
+    <string name="status_restored_confirm">복원되었습니다.</string>
+    <string name="status_queued_restore">리스너가 연결되어 있지 않습니다 -- 재연결되면 자동으로 복원됩니다.</string>
+    <string name="status_reset_all">모두 기본값으로 초기화</string>
+    <string name="status_reset_title">백업 없이 초기화할까요?</string>
+    <string name="status_reset_body">허용 목록 여부와 관계없이 모든 앱에서, 중요도가 LOW인 카테고리를 DEFAULT로 올리고, 진동을 다시 켜고, 소리가 없는 카테고리에는 기본 알림음을 지정합니다. 직접 끈 카테고리와 사용자 지정 알림음은 그대로 둡니다. 이후 백업은 삭제됩니다.\n\n일부 카테고리는 원래 조용하게 만들어진 것입니다(음악 재생, 다운로드 진행 등). 이것들도 올라가서 소리가 날 수 있으니 직접 고쳐주세요.\n\n초기화 후 지금 실행을 눌러 진동을 다시 끄세요.</string>
+    <string name="status_reset_confirm">초기화</string>
+    <string name="status_reset_cancel">취소</string>
+    <string name="status_reset_done">기본값으로 초기화했습니다.</string>
+    <string name="status_queued_reset">리스너가 연결되어 있지 않습니다. 재연결되면 자동으로 초기화됩니다.</string>
+    <string name="status_advanced">고급 설정</string>
+    <string name="status_include_system_apps">처리 시 시스템 앱 포함</string>
+
+    <!-- Allowlist screen -->
+    <string name="allowlist_title">허용 목록</string>
+    <string name="allowlist_export">내보내기</string>
+    <string name="allowlist_import">가져오기</string>
+    <string name="allowlist_exported">%1$d개 앱을 내보냈습니다.</string>
+    <string name="allowlist_imported">%1$d개 앱을 가져왔습니다.</string>
+    <string name="allowlist_import_failed_invalid">가져오기 실패: 유효한 QuietBuzz 설정 파일이 아닙니다.</string>
+    <string name="allowlist_import_failed_read">가져오기 실패: 파일을 읽을 수 없습니다.</string>
+    <string name="allowlist_search_hint">설치된 앱 검색</string>
+    <string name="allowlist_only_notifications_on">알림이 켜진 앱만</string>
+    <string name="allowlist_show_system_apps">시스템 앱 표시</string>
+    <string name="allowlist_summary">허용 %1$d개 -- 표시 %2$d개</string>
+    <string name="allowlist_section_allowed">허용됨 (%1$d개)</string>
+    <string name="allowlist_section_all_apps">전체 앱</string>
+    <string name="allowlist_open_app_settings">설정</string>
+    <string name="allowlist_settings_hint">삼성의 앱 단위 \"소리 및 진동\" 스위치는 API가 없어서 QuietBuzz가 바꾸거나 맞춰둘 수 없습니다. 앱의 설정 버튼을 눌러 알림 화면을 열고 직접 바꿔주세요.</string>
+    <string name="allowlist_restored_one">%1$s 복원됨.</string>
+    <string name="allowlist_silenced_one">%1$s 무음 처리됨.</string>
+</resources>

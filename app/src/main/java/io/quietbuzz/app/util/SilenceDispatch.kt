@@ -24,9 +24,11 @@ object SilenceDispatch {
     ): Boolean {
         val live = SilenceListenerServiceHolder.instance.value
         return if (live != null) {
+            DiagnosticLog.add("Dispatch: listener live, running $fallbackAction directly")
             onLive(live)
             true
         } else {
+            DiagnosticLog.add("Dispatch: listener NOT live, queuing $fallbackAction and requesting rebind")
             passStateRepository.setPendingAction(fallbackAction)
             NotificationListenerService.requestRebind(
                 ComponentName(context, SilenceListenerService::class.java),

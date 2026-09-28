@@ -2,17 +2,24 @@ package io.quietbuzz.app.data
 
 import android.Manifest
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.core.graphics.drawable.toBitmap
 import io.quietbuzz.app.util.isSystemApp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+
+private const val ICON_SIZE_PX = 96
 
 data class InstalledApp(
     val packageName: String,
     val label: String,
     val isSystemApp: Boolean,
     val notificationsLikelyOn: Boolean,
+    val icon: ImageBitmap?,
 )
 
 /**
@@ -25,7 +32,9 @@ data class InstalledApp(
  *
  * Uses getInstalledPackages(GET_PERMISSIONS) once rather than a per-app checkPermission/
  * getPackageInfo call: for ~150-300 installed apps that's one bulk Binder call instead of up to
- * 2 x N of them.
+ * 2 x N of them. Icons are decoded down to a fixed small size up front (while the picker's own
+ * loading spinner is already showing) rather than lazily per row, since a bounded one-time cost
+ * here is simpler than per-row async loading and caching for a list this size.
  */
 class InstalledAppsRepository(private val context: Context) {
 
@@ -44,9 +53,16 @@ class InstalledAppsRepository(private val context: Context) {
                     label = appInfo?.loadLabel(pm)?.toString() ?: packageInfo.packageName,
                     isSystemApp = appInfo?.isSystemApp() ?: false,
                     notificationsLikelyOn = notificationsLikelyOn(packageInfo),
+                    icon = appInfo?.let { loadIcon(it, pm) },
                 )
             }
             .sortedBy { it.label.lowercase() }
+    }
+
+    private fun loadIcon(appInfo: ApplicationInfo, pm: PackageManager): ImageBitmap? = try {
+        appInfo.loadIcon(pm).toBitmap(width = ICON_SIZE_PX, height = ICON_SIZE_PX).asImageBitmap()
+    } catch (e: Exception) {
+        null
     }
 
     private fun notificationsLikelyOn(packageInfo: PackageInfo): Boolean {

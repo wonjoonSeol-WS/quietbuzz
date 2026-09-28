@@ -7,6 +7,7 @@ import io.quietbuzz.app.data.PassStateRepository
 import io.quietbuzz.app.logic.SilencePass
 import io.quietbuzz.app.model.PassResult
 import io.quietbuzz.app.model.PendingAction
+import io.quietbuzz.app.util.DiagnosticLog
 import io.quietbuzz.app.util.NotificationHelper
 import io.quietbuzz.app.util.SilenceListenerServiceHolder
 import kotlinx.coroutines.CoroutineScope
@@ -45,13 +46,18 @@ class SilenceListenerService : NotificationListenerService() {
     override fun onListenerConnected() {
         super.onListenerConnected()
         Log.i(TAG, "Listener connected")
+        DiagnosticLog.add("Listener connected")
         SilenceListenerServiceHolder.onConnected(this)
 
         serviceScope.launch {
             allowlistRepository.seedDefaultsIfNeeded()
             val includeSystemApps = passStateRepository.includeSystemApps.first()
-            val result = when (val pending = passStateRepository.consumePendingAction()) {
+            val pending = passStateRepository.consumePendingAction()
+            DiagnosticLog.add("onListenerConnected: pending action = $pending")
+            val result = when (pending) {
                 is PendingAction.RestoreAll -> pass.restoreAll()
+                is PendingAction.RestoreOne -> pass.restorePackage(pending.packageName)
+                is PendingAction.ResetAll -> pass.resetAllToDefaults(includeSystemApps)
                 is PendingAction.SilenceOne -> pass.runSilenceForPackage(pending.packageName)
                 is PendingAction.SilenceAll, PendingAction.None -> pass.runSilenceAll(includeSystemApps)
             }
@@ -62,6 +68,7 @@ class SilenceListenerService : NotificationListenerService() {
     override fun onListenerDisconnected() {
         super.onListenerDisconnected()
         Log.i(TAG, "Listener disconnected")
+        DiagnosticLog.add("Listener disconnected")
         SilenceListenerServiceHolder.onDisconnected()
     }
 
@@ -89,4 +96,10 @@ class SilenceListenerService : NotificationListenerService() {
 
     suspend fun restoreAllNow(): PassResult =
         pass.restoreAll().also { handleAssociationState(it) }
+
+    suspend fun resetAllToDefaultsNow(includeSystemApps: Boolean): PassResult =
+        pass.resetAllToDefaults(includeSystemApps).also { handleAssociationState(it) }
+
+    suspend fun restorePackageNow(packageName: String): PassResult =
+        pass.restorePackage(packageName).also { handleAssociationState(it) }
 }

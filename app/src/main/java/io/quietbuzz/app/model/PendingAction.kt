@@ -12,4 +12,6 @@ sealed class PendingAction {
     data object SilenceAll : PendingAction()
     data class SilenceOne(val packageName: String) : PendingAction()
     data object RestoreAll : PendingAction()
+    data class RestoreOne(val packageName: String) : PendingAction()
+    data object ResetAll : PendingAction()
 }

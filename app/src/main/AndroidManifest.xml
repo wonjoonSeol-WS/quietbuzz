@@ -30,6 +30,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.QuietBuzz"
+        android:localeConfig="@xml/locales_config"
         android:supportsRtl="true">
 
         <activity
