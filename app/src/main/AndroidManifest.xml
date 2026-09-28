@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Needed to enumerate every installed app for the silence pass and the allowlist picker.
+         Play Store gates this permission behind a justification form; irrelevant here since
+         this app is sideloaded and never published. -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackages" />
+
+    <!-- Required so the app's own "please re-link" alert can be posted on API 33+. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <!-- Needed to drive the CompanionDeviceManager association picker's Bluetooth scan.
+         neverForLocation is accurate: we only match on advertised device name, never derive
+         physical location from the scan results. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN"
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+
+    <!-- Declares intent to use CompanionDeviceManager without requiring any specific
+         device profile (no WATCH/AUTOMOTIVE_PROJECTION, etc.). required="false" keeps
+         this from being used as a device-compatibility filter. -->
+    <uses-feature
+        android:name="android.software.companion_device_setup"
+        android:required="false" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.QuietBuzz"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.QuietBuzz">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- android:permission ties this to the system's notification pipeline: only the
+             system can bind to it, which is what makes "notification access" a safe grant. -->
+        <service
+            android:name=".service.SilenceListenerService"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
+            </intent-filter>
+        </service>
+
+        <!-- PACKAGE_ADDED is a protected system broadcast (only the OS can send it), so
+             exported="true" here does not open this receiver up to arbitrary apps. -->
+        <receiver
+            android:name=".receiver.PackageAddedReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_ADDED" />
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
