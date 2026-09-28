@@ -31,3 +31,8 @@ captures/
 
 # macOS
 .DS_Store
+
+# Locally-installed Claude Code skill tooling (used to build docs/, not project content)
+.agents/
+.claude/
+skills-lock.json

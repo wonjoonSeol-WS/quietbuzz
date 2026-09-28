@@ -1,0 +1,637 @@
+<!doctype html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>QuietBuzz</title>
+<meta name="description" content="Silence every app's notifications except the ones you choose, without touching Do Not Disturb.">
+<meta property="og:title" content="QuietBuzz">
+<meta property="og:description" content="Silence every app's notifications except the ones you choose, without touching Do Not Disturb.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wonjoonSeol-WS.github.io/quietbuzz/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QuietBuzz">
+<meta name="twitter:description" content="Silence every app's notifications except the ones you choose, without touching Do Not Disturb.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2346708C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 8a3 3 0 0 1 6 0v3.5l1.5 3H7.5L9 11.5z'/%3E%3Cpath d='M10.5 15.5a1.5 1.8 0 0 0 3 0'/%3E%3Cpath d='M4 4l16 16'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@latest/dist/web/variable/pretendardvariable-dynamic-subset.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --background: oklch(98% 0.004 90);
+    --foreground: oklch(21% 0.012 260);
+    --card: oklch(100% 0 0);
+    --card-foreground: oklch(21% 0.012 260);
+    --primary: oklch(46% 0.085 210);
+    --primary-foreground: oklch(98% 0.004 90);
+    --muted: oklch(94.5% 0.006 90);
+    --muted-foreground: oklch(46% 0.014 260);
+    --border: oklch(88% 0.006 90);
+    --accent: oklch(91% 0.03 205);
+    --accent-foreground: oklch(28% 0.05 210);
+    --destructive: oklch(53% 0.17 25);
+    --destructive-foreground: oklch(98% 0.004 90);
+
+    --font-display: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-body: 'Pretendard Variable', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', monospace;
+
+    --text-xs: 0.8125rem;
+    --text-sm: 0.9375rem;
+    --text-base: 1.0625rem;
+    --text-lg: 1.25rem;
+    --text-xl: 1.75rem;
+    --text-2xl: clamp(2rem, 1.6rem + 1.6vw, 2.75rem);
+
+    --leading-tight: 1.2;
+    --leading-normal: 1.6;
+
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 16px;
+
+    --spacing-xs: 0.375rem;
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1.25rem;
+    --spacing-lg: 2.25rem;
+    --spacing-xl: 4rem;
+
+    --shadow-sm: 0 1px 2px oklch(21% 0.012 260 / 0.06);
+
+    --motion-duration: 150ms;
+    --motion-ease: cubic-bezier(0.16, 1, 0.3, 1);
+
+    color-scheme: light;
+  }
+
+  :root[data-theme="dark"] {
+    --background: oklch(17% 0.012 260);
+    --foreground: oklch(92% 0.006 90);
+    --card: oklch(21% 0.013 260);
+    --card-foreground: oklch(92% 0.006 90);
+    --primary: oklch(72% 0.1 205);
+    --primary-foreground: oklch(16% 0.01 260);
+    --muted: oklch(25% 0.013 260);
+    --muted-foreground: oklch(68% 0.012 260);
+    --border: oklch(31% 0.014 260);
+    --accent: oklch(28% 0.04 210);
+    --accent-foreground: oklch(85% 0.05 205);
+    --destructive: oklch(66% 0.17 25);
+    --destructive-foreground: oklch(16% 0.01 260);
+    --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
+    color-scheme: dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]):not([data-theme="dark"]) {
+      --background: oklch(17% 0.012 260);
+      --foreground: oklch(92% 0.006 90);
+      --card: oklch(21% 0.013 260);
+      --card-foreground: oklch(92% 0.006 90);
+      --primary: oklch(72% 0.1 205);
+      --primary-foreground: oklch(16% 0.01 260);
+      --muted: oklch(25% 0.013 260);
+      --muted-foreground: oklch(68% 0.012 260);
+      --border: oklch(31% 0.014 260);
+      --accent: oklch(28% 0.04 210);
+      --accent-foreground: oklch(85% 0.05 205);
+      --destructive: oklch(66% 0.17 25);
+      --destructive-foreground: oklch(16% 0.01 260);
+      --shadow-sm: 0 1px 2px oklch(0% 0 0 / 0.3);
+      color-scheme: dark;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  [data-lang="en"] [lang="ko"],
+  [data-lang="ko"] [lang="en"] { display: none; }
+
+  code, .mono { font-family: var(--font-mono); font-size: 0.9em; }
+
+  main {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: var(--spacing-xl) var(--spacing-md) var(--spacing-xl);
+  }
+
+  header.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .hero-text h1 {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    margin: 0 0 var(--spacing-xs);
+    letter-spacing: -0.01em;
+  }
+
+  .hero-text p.subtitle {
+    font-size: var(--text-lg);
+    color: var(--muted-foreground);
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  #lang-toggle {
+    flex: none;
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+  }
+
+  #lang-toggle button {
+    appearance: none;
+    border: none;
+    background: var(--card);
+    color: var(--muted-foreground);
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: inherit;
+    transition: background var(--motion-duration) var(--motion-ease), color var(--motion-duration) var(--motion-ease);
+  }
+
+  #lang-toggle button[aria-pressed="true"] {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  dl.meta-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm) var(--spacing-lg);
+    margin: var(--spacing-md) 0 var(--spacing-lg);
+    padding: var(--spacing-sm) 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  dl.meta-grid div { display: flex; gap: 0.4rem; align-items: baseline; }
+  dl.meta-grid dt {
+    font-size: var(--text-xs);
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  dl.meta-grid dd { margin: 0; font-size: var(--text-sm); }
+  dl.meta-grid a { color: var(--primary); text-decoration: none; border-bottom: 1px solid currentColor; }
+
+  section { margin-bottom: var(--spacing-xl); }
+  section h2 {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    margin: 0 0 var(--spacing-md);
+    letter-spacing: -0.005em;
+  }
+
+  p { margin: 0 0 var(--spacing-sm); }
+  p:last-child { margin-bottom: 0; }
+
+  .lead p {
+    font-size: var(--text-lg);
+    line-height: 1.55;
+  }
+
+  section.mechanism {
+    background: var(--muted);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+  }
+  section.mechanism h2 { color: var(--foreground); }
+  section.mechanism code {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 0.1em 0.4em;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+  }
+  table caption {
+    text-align: left;
+    font-size: var(--text-xs);
+    color: var(--muted-foreground);
+    margin-bottom: var(--spacing-sm);
+  }
+  th, td {
+    text-align: left;
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  thead th {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+    font-weight: 600;
+    border-bottom: 1px solid var(--foreground);
+  }
+  tbody th { font-weight: 600; white-space: nowrap; }
+
+  ol.steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  ol.steps li {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+  }
+  .step-icon {
+    flex: none;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--radius-md);
+    background: var(--accent);
+    color: var(--accent-foreground);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step-icon svg { width: 1.375rem; height: 1.375rem; }
+  .step-body { padding-top: 0.3rem; }
+  .step-body .step-title { font-weight: 600; display: block; margin-bottom: 0.15rem; }
+  .step-body .step-detail { color: var(--muted-foreground); font-size: var(--text-sm); }
+  .step-body code {
+    background: var(--muted);
+    border-radius: var(--radius-sm);
+    padding: 0.05em 0.35em;
+  }
+
+  aside.callout {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--card);
+    padding: var(--spacing-md);
+    font-size: var(--text-sm);
+  }
+  aside.callout .callout-label {
+    display: block;
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted-foreground);
+    margin-bottom: 0.35rem;
+  }
+
+  footer.closing {
+    border-top: 1px solid var(--border);
+    padding-top: var(--spacing-lg);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+  footer.closing p { color: var(--muted-foreground); font-size: var(--text-sm); }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-radius: var(--radius-md);
+    padding: 0.7rem 1.25rem;
+    font-weight: 600;
+    font-size: var(--text-sm);
+    text-decoration: none;
+    transition: opacity var(--motion-duration) var(--motion-ease);
+  }
+  .btn-primary:hover { opacity: 0.88; }
+
+  @media (max-width: 640px) {
+    main { padding: var(--spacing-lg) var(--spacing-sm) var(--spacing-xl); }
+    header.hero { flex-direction: column; }
+    #lang-toggle { align-self: flex-start; }
+    dl.meta-grid { flex-direction: column; gap: var(--spacing-xs); }
+    section.mechanism { padding: var(--spacing-md); }
+    table, thead, tbody, th, td, tr { display: block; }
+    thead { display: none; }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      padding: var(--spacing-sm) 0;
+    }
+    tbody tr:last-child { border-bottom: none; }
+    td, th { border: none; padding: 0.2rem 0; }
+    td::before {
+      content: attr(data-label);
+      display: block;
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted-foreground);
+      margin-bottom: 0.15rem;
+    }
+    footer.closing { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition-duration: 0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <header class="hero">
+    <div class="hero-text">
+      <h1>QuietBuzz</h1>
+      <p class="subtitle">
+        <span lang="en">Silence every app's notifications except the ones you choose &mdash; without touching Do Not Disturb.</span>
+        <span lang="ko">직접 고른 앱만 남기고 나머지 알림의 소리와 진동을 모두 끕니다 &mdash; 방해 금지 모드는 건드리지 않고.</span>
+      </p>
+    </div>
+    <div id="lang-toggle" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-set-lang="ko" aria-pressed="false">한국어</button>
+    </div>
+  </header>
+
+  <dl class="meta-grid">
+    <div>
+      <dt><span lang="en">Platform</span><span lang="ko">플랫폼</span></dt>
+      <dd>Android 13+ &middot; One UI</dd>
+    </div>
+    <div>
+      <dt><span lang="en">Stack</span><span lang="ko">스택</span></dt>
+      <dd>Kotlin &middot; Jetpack Compose</dd>
+    </div>
+    <div>
+      <dt><span lang="en">Source</span><span lang="ko">저장소</span></dt>
+      <dd><a href="https://github.com/wonjoonSeol-WS/quietbuzz">github.com/wonjoonSeol-WS/quietbuzz</a></dd>
+    </div>
+  </dl>
+
+  <section class="lead">
+    <p lang="en">
+      Most Android phones only stay quiet if you turn notifications off one app, one channel at a time &mdash;
+      and the setting resets every time you install something new. QuietBuzz does the opposite: it silences
+      sound and vibration everywhere except a small allowlist you choose, while keeping every notification
+      fully visible in the shade. No Do Not Disturb icon, no forgotten muted apps, no re-tuning after every
+      new install.
+    </p>
+    <p lang="ko">
+      대부분의 안드로이드 폰은 앱마다, 채널마다 일일이 알림을 꺼야만 조용해지고, 새 앱을 설치할 때마다
+      그 설정은 다시 초기화됩니다. QuietBuzz는 반대로 동작합니다 &mdash; 직접 고른 소수의 허용 목록만
+      남기고 나머지 모든 앱의 소리와 진동을 끄면서도, 알림 자체는 알림창에 그대로 보여줍니다. 방해 금지
+      아이콘도 없고, 깜빡 잊고 무음으로 남겨둔 앱도 없고, 새 앱을 설치할 때마다 다시 설정할 필요도 없습니다.
+    </p>
+  </section>
+
+  <section class="mechanism">
+    <h2><span lang="en">How it works</span><span lang="ko">작동 원리</span></h2>
+    <p lang="en">
+      Android normally refuses this. A notification channel's importance level controls sound and vibration,
+      but only two kinds of caller can change <em>another</em> app's channel importance from outside that app:
+      the single system-wide Notification Assistant role, or a <code>NotificationListenerService</code> whose
+      app also holds a <code>CompanionDeviceManager</code> association &mdash; stated directly in Android's own
+      API reference, not a workaround. QuietBuzz uses the second path: pairing with any nearby Bluetooth device
+      (nothing about the device is used afterward &mdash; it's a permission token, not a connection) satisfies
+      that requirement, then the listener lowers every non-allowlisted app's channels to
+      <code>IMPORTANCE_LOW</code> &mdash; shown in the shade, no sound, no vibration.
+    </p>
+    <p lang="ko">
+      안드로이드는 원래 이걸 허용하지 않습니다. 알림 채널의 중요도(importance)가 소리와 진동을 결정하지만,
+      <em>다른</em> 앱의 채널 중요도를 외부에서 바꿀 수 있는 건 딱 두 경우뿐입니다: 시스템 전체에서 단 하나만
+      존재하는 알림 어시스턴트(Notification Assistant) 역할이거나, <code>CompanionDeviceManager</code> 연결을
+      보유한 <code>NotificationListenerService</code> &mdash; 이는 안드로이드 공식 API 문서에 직접 명시된
+      내용으로, 우회 편법이 아닙니다. QuietBuzz는 두 번째 방법을 사용합니다: 근처 블루투스 기기 아무거나와
+      페어링하면(페어링 이후 그 기기는 전혀 사용되지 않습니다 &mdash; 연결이 아니라 권한 토큰일 뿐입니다)
+      이 조건을 만족하고, 이후 리스너가 허용 목록에 없는 모든 앱의 채널을 <code>IMPORTANCE_LOW</code>로
+      낮춥니다 &mdash; 알림창에는 그대로 보이지만 소리도 진동도 없습니다.
+    </p>
+  </section>
+
+  <section>
+    <h2><span lang="en">What happens automatically</span><span lang="ko">무엇이 자동으로 처리되나요</span></h2>
+    <table>
+      <caption>
+        <span lang="en">Every trigger QuietBuzz reacts to, and what it does.</span>
+        <span lang="ko">QuietBuzz가 반응하는 모든 트리거와 그 동작.</span>
+      </caption>
+      <thead>
+        <tr>
+          <th scope="col"><span lang="en">Trigger</span><span lang="ko">트리거</span></th>
+          <th scope="col"><span lang="en">What happens</span><span lang="ko">동작</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row" data-label="Trigger">
+            <span lang="en">App installed</span><span lang="ko">앱 설치됨</span>
+          </th>
+          <td data-label="What happens">
+            <span lang="en">Silenced within seconds.</span>
+            <span lang="ko">설치 즉시(수 초 내) 자동으로 무음 처리됩니다.</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-label="Trigger">
+            <span lang="en">Listener (re)connects &mdash; boot, fresh grant, reconnect</span>
+            <span lang="ko">리스너 (재)연결 &mdash; 부팅, 최초 권한 허용, 재연결</span>
+          </th>
+          <td data-label="What happens">
+            <span lang="en">Full pass over every installed app.</span>
+            <span lang="ko">설치된 모든 앱을 한 번씩 전체적으로 처리합니다.</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-label="Trigger">
+            <span lang="en">You tap "Run now"</span><span lang="ko">"지금 실행" 버튼</span>
+          </th>
+          <td data-label="What happens">
+            <span lang="en">Full pass, on demand.</span>
+            <span lang="ko">언제든 수동으로 전체 처리를 실행합니다.</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-label="Trigger">
+            <span lang="en">You tap "Restore all"</span><span lang="ko">"모두 복원" 버튼</span>
+          </th>
+          <td data-label="What happens">
+            <span lang="en">Reverts every channel QuietBuzz changed back to its original importance.</span>
+            <span lang="ko">QuietBuzz가 바꾼 모든 채널을 원래 중요도로 되돌립니다.</span>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row" data-label="Trigger">
+            <span lang="en">An existing app adds a new channel later</span>
+            <span lang="ko">기존 앱이 나중에 새 채널을 추가함</span>
+          </th>
+          <td data-label="What happens">
+            <span lang="en">Not automatic &mdash; tap "Run now" if you notice one buzzing.</span>
+            <span lang="ko">자동 처리 대상이 아닙니다 &mdash; 알림이 울리면 "지금 실행"을 눌러주세요.</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2><span lang="en">How to use it</span><span lang="ko">사용 방법</span></h2>
+    <ol class="steps">
+      <li>
+        <span class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        </span>
+        <span class="step-body">
+          <span class="step-title">
+            <span lang="en">Allow restricted settings</span><span lang="ko">제한된 설정 허용</span>
+          </span>
+          <span class="step-detail">
+            <span lang="en">Settings &rsaquo; Apps &rsaquo; QuietBuzz &rsaquo; &#8942; &rsaquo; <code>Allow restricted settings</code> &mdash; required for a sideloaded app.</span>
+            <span lang="ko">설정 &rsaquo; 앱 &rsaquo; QuietBuzz &rsaquo; &#8942; &rsaquo; <code>제한된 설정 허용</code> &mdash; 사이드로드한 앱에는 필수입니다.</span>
+          </span>
+        </span>
+      </li>
+      <li>
+        <span class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4a4 4 0 0 1 4 4c0 2-2 3-2 5v3a4 4 0 0 1-8 0"/><path d="M8 10h8"/></svg>
+        </span>
+        <span class="step-body">
+          <span class="step-title">
+            <span lang="en">Grant notification access</span><span lang="ko">알림 접근 권한 허용</span>
+          </span>
+          <span class="step-detail">
+            <span lang="en">Special access &rsaquo; Notification access &rsaquo; enable QuietBuzz.</span>
+            <span lang="ko">특수 접근 권한 &rsaquo; 알림 접근 &rsaquo; QuietBuzz 활성화.</span>
+          </span>
+        </span>
+      </li>
+      <li>
+        <span class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10-5 5V2l5 5L7 17"/></svg>
+        </span>
+        <span class="step-body">
+          <span class="step-title">
+            <span lang="en">Link a device</span><span lang="ko">기기 연결</span>
+          </span>
+          <span class="step-detail">
+            <span lang="en">Pick any nearby Bluetooth device from the system picker &mdash; it doesn't matter which.</span>
+            <span lang="ko">시스템 선택 창에서 근처 블루투스 기기 아무거나 선택하세요 &mdash; 어떤 기기든 상관없습니다.</span>
+          </span>
+        </span>
+      </li>
+      <li>
+        <span class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l14 8-14 8V4z"/></svg>
+        </span>
+        <span class="step-body">
+          <span class="step-title">
+            <span lang="en">Run now &mdash; or just wait</span><span lang="ko">지금 실행 &mdash; 또는 그냥 기다리기</span>
+          </span>
+          <span class="step-detail">
+            <span lang="en">New app installs are caught automatically from here on.</span>
+            <span lang="ko">이후 새로 설치되는 앱은 자동으로 감지됩니다.</span>
+          </span>
+        </span>
+      </li>
+      <li>
+        <span class="step-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="16" height="8" rx="1.5"/><path d="M20 10.5v3"/></svg>
+        </span>
+        <span class="step-body">
+          <span class="step-title">
+            <span lang="en">Set battery to Unrestricted</span><span lang="ko">배터리 사용을 "제한 없음"으로 설정</span>
+          </span>
+          <span class="step-detail">
+            <span lang="en">Settings &rsaquo; Apps &rsaquo; QuietBuzz &rsaquo; Battery &rsaquo; Unrestricted.</span>
+            <span lang="ko">설정 &rsaquo; 앱 &rsaquo; QuietBuzz &rsaquo; 배터리 &rsaquo; 제한 없음.</span>
+          </span>
+        </span>
+      </li>
+    </ol>
+  </section>
+
+  <aside class="callout">
+    <span class="callout-label"><span lang="en">Worth knowing</span><span lang="ko">참고 사항</span></span>
+    <span lang="en">
+      This is a personal, sideloaded project &mdash; not on the Play Store, no root required. If the paired
+      device's association is ever revoked, QuietBuzz posts a notification asking you to re-link; it silences
+      nothing until you do.
+    </span>
+    <span lang="ko">
+      Play 스토어에 올라가 있지 않은 개인용 사이드로드 프로젝트이며, 루팅이 필요 없습니다. 연결된 기기의
+      권한이 해제되면 QuietBuzz가 재연결을 요청하는 알림을 띄우며, 재연결 전까지는 아무것도 무음 처리하지
+      않습니다.
+    </span>
+  </aside>
+
+  <footer class="closing">
+    <p>
+      <span lang="en">Full setup, verification commands, and known tradeoffs are in the README.</span>
+      <span lang="ko">전체 설치 과정, 검증 명령어, 알려진 한계는 README에 있습니다.</span>
+    </p>
+    <a class="btn-primary" href="https://github.com/wonjoonSeol-WS/quietbuzz">
+      <span lang="en">View on GitHub</span><span lang="ko">GitHub에서 보기</span>
+    </a>
+  </footer>
+
+</main>
+<script>
+(function () {
+  var root = document.documentElement;
+  var STORAGE_KEY = 'quietbuzz-lang';
+  var buttons = document.querySelectorAll('#lang-toggle button');
+
+  function apply(lang) {
+    root.setAttribute('data-lang', lang);
+    root.setAttribute('lang', lang);
+    buttons.forEach(function (btn) {
+      btn.setAttribute('aria-pressed', String(btn.getAttribute('data-set-lang') === lang));
+    });
+  }
+
+  buttons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var lang = btn.getAttribute('data-set-lang');
+      apply(lang);
+      try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+    });
+  });
+
+  var saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+  if (saved === 'en' || saved === 'ko') {
+    apply(saved);
+  } else if (navigator.language && navigator.language.toLowerCase().indexOf('ko') === 0) {
+    apply('ko');
+  }
+})();
+</script>
+</body>
+</html>
